@@ -1,0 +1,71 @@
+# Python/Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+env/
+venv/
+.env
+local_settings.py
+
+# Django static & media files
+staticfiles/
+media/
+
+# Tailwind CSS & Node.js
+node_modules/
+*.css.map
+*.js.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker artifacts
+*.pid
+*.bak
+*.swp
+*.tmp
+*.lock
+*.tar
+*.gz
+*.zip
+*.log
+*.env
+.docker/
+docker-compose.override.yml
+
+# VSCode settings
+.vscode/
+
+# Database files
+*.db
+*.pgsql
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+*.py,cover
+.cache
+
+# Build artifacts
+dist/
+build/
+
+# Test output
+test-results/
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Git
+.git/
+
+# Optional: Customize for Tuzmore CRM
+tuzmore_settings.py
+tuzmore_secrets.json
