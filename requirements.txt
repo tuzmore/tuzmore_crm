@@ -1,4 +1,9 @@
-Django>=4.2,<5.0
+# Core Django Setup
+Django>4.2,<5.0
 djangorestframework
-psycopg2-binary
+djangorestframework-simplejwt
 python-decouple
+psycopg2-binary
+drf-yasg
+
+
