@@ -28,6 +28,7 @@ schema_view = get_schema_view(
     ),
     public=True,
     permission_classes=[permissions.AllowAny],
+    authentication_classes=[],
 )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
     path('api/auth/', include('users.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/contacts/', include('contacts.urls')),
+    path('api/deals/', include('deals.urls')),
 ]

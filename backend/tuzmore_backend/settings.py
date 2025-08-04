@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'users',
     'contacts',
+    'deals',
 ]
 
 from datetime import timedelta
@@ -58,6 +59,19 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+SWAGGER_SEETTINGS = {
+    'USE_SESSION_AUTH': False,
+
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': "Enter JWT token as: **Bearer &lt;your_token&gt;**",
+        }
+    }
 }
 
 MIDDLEWARE = [
