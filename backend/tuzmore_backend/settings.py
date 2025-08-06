@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'users',
-    'contacts',
     'deals',
     'activities',
+    'contacts',
+    'accounts'
 ]
 
 from datetime import timedelta

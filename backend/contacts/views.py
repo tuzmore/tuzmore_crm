@@ -1,24 +1,32 @@
 from django.shortcuts import render
+from rest_framework import generics, permissions, filters
 from .models import Contact
-from rest_framework import generics, permissions
 from .serializers import ContactSerializer
 # Create your views here.
 
-class ContactListCreateView(generics.ListCreateAPIView):
+class ContactCreateAPIView(generics.CreateAPIView):
+    queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return
-        Contact.objects.filter(user=self.request.user)
-
-    def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
-
-class ContactRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+class ContactListAPIView(generics.ListAPIView):
+    queryset = Contact.objects.all().order_by('-created_at')
     serializer_class = ContactSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
+    filter_backend = [filters.SearchFilter,filters.OrderingFilter]
+    search_fields = ['full_name', 'email', 'subject', 'message']
 
-    def get_queryset(self):
-        return
-        Contact.objects.filter(user=self.request.user)
+class ContactRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class ContactUpdateAPIView(generics.UpdateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class ContactDeleteAPIView(generics.DestroyAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAdminUser]

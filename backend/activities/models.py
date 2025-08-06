@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from contacts.models import Contact
 from deals.models import Deal
 # Create your models here.
 
@@ -12,7 +11,6 @@ class Activity(models.Model):
     ]
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
     deal = models.ForeignKey(Deal, on_delete=models.CASCADE, null=True, blank=True)
     activity_type = models.CharField(max_length=20,
         choices=ACTIVITY_TYPES)
