@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<section class="flex flex-col-reverse md:flex-row items-center
+justify-between gap-8 md:px-12 py-16 bg-gradient-to-r from-blue-50 to-white rounded-xl shadow-md">
+    <!-- ---Text Content --- -->
+
+    <div class="md:w-1/2 text-center md:text-left space-x-6">
+        <h1 class="text-4xl md:text-5xl font-bold text-blue-700 leading-tight">
+            Smart CRM to manage <br> Clients, Projects & Payments
+        </h1>
+        <p class="text-lg text-gray-600">
+            Organize client communication, track tasks
+            send invoices,and grow your business-all in one place
+        </p>
+        <a href="#" class="inline-block bg-blue-600
+        text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        🚀Get Started Now
+    </a>
+    </div>
+
+
+    <div class="md:w-1/2">
+        <img src="{% static 'images/crm_dashboard.png.png' %}" alt="CRM dashboard" class="w-full
+        max-w-sm mx-auto rounded-xl shadow">
+
+    </div>
+
+</section>
+
+<section class="py-16 bg-gray-50 mt-4">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold
+        text-gray-800 mb-6">Features That power Productivity</h2>
+        <p class="text-gray-600 mb-12 text-lg">
+            Everything you need to manage your freelance 
+            clients or agency workflow-all in one place.
+        </p>
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-left">
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <div class="text-blue-600 text-3xl mb-4">📁</div>
+                <h3 class=" text-xl font-semibold mb-2">Project Management</h3>
+                <p class="text-gray-600 text-sm">Create, track, and Organize all your
+                    projects with timelines, tasks, and client assignments.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <div class="text-green-600 text-3xl mb-4">✅</div>
+                <h3 class="text-xl font-semibold mb-2">Task Tracking</h3>
+                <p class="text-gray-600 text-sm">Stay on top of
+                    deliverables and mark tasks as complete with assigned responsibilities
+                </p>
+            </div>
+
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                    <div class="text-purple-600 text-3xl mb-4">💬</div>
+                    <h3 class="text-xl font-semibold mb-2">Client Messaging</h3>
+                    <p class="text-gray-600 text-sm">
+                        Communicate with clients per project,all
+                        inside your dashboard-no messy emails.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                    <div class="text-yellow-600 text-3xl mb-4">💵</div>
+                    <h3 class="text-xl font-semibold mb-2">Invoice & Payments</h3>
+                    <p class="text-gray-600 text-sm">
+                        Send invoices, track status, and collect payments via paypal
+                        or stripe intergration.
+                    </p>
+                </div>
+
+            
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">My Portfolio</h2>
+        <p class="text=gray-600 text-lh mb=12">Some of the work and tools I've built or am building</p>
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+            <div class="bg-gray-50 p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="{% static 'images/crm_dashboard.png.png' %}" alt="CRM dashboard" class="w-full
+        max-w-sm mx-auto rounded-xl shadow">
+
+                <h3 class="text-xl font-semibold text-gray-800">Client Portal CRM</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                    A full-stack CRM app with user roles, tasks,
+                    Messaging, and invoicing built in Django + Tailwind CSS.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="{% static 'images/crm_dashboard.png.png' %}" alt="CRM dashboard" class="w-full
+        max-w-sm mx-auto rounded-xl shadow">
+                <h3 class="text-xl font-semibold text-gray-800">Freelancer Portfolio</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                    Personal portfolio website showing my services, contact form, and testimonials.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="{% static 'images/crm_dashboard.png.png' %}" alt="CRM dashboard" class="w-full
+        max-w-sm mx-auto rounded-xl shadow">
+
+                <h3 class="text-xl font-semibold text-gray-800">API-Ready Backend</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                    Resful backend with Django Rest Framework to power real-world application
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="py-20 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold
+        text-gray-800 mb-4">What People Say</h2>
+        <p class="text-gray-600 mb-12 text-lg">
+            Even if you're new, placeholder testimonials show presentation
+            skills and professionalism.
+        </p>
+
+        <div class="grid gap-8 md:grid-cols-3">
+            <div class="bg-white p-6 rounded-lg shadow
+            hover:shadow-lg transition">
+            <p class="text-gray-700 text-sm mb-4">
+                This CRM simplified our project flow and saved us hours of manual 
+                updates every week.
+            </p>
+            <div class="text-sm font-bold text-gray-800">
+                MOham M., Small Business Owner</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow 
+            hover:shadow-lg transition">
+            <p class="text-gray-700 text-sm mb-4">
+                "Very clean design, fast, and reliable. Great work from developer."</p>
+                <div class="text-sm font-semibold">
+                    - Alex B., Freelance
+                    </div>
+
+                </div>
+
+            <div class="bg-white p-6 rounded-lg shadow
+            hover:shadow-lg transition">
+            <p class="text-gray-700 text-sm mb-4">
+                "The task tracking and messaging features helped our
+                remote team collaborate easily."
+            </p>
+            <div class="text-sm font-semibold text-gray-800">
+                -Majid Y., Tech Startup
+
+            </div>
+
+            </div>
+            
+
+            
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

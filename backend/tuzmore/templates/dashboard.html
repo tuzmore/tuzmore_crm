@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-6">
+  <h1 class="text-3xl font-bold mb-6">Tuzmore CRM Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div>
+      <h2 class="text-xl font-semibold mb-2">Deals</h2>
+      <div id="deals-container" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-semibold mb-2">Contacts</h2>
+      <div id="contacts-container" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-semibold mb-2">Teams</h2>
+      <div id="teams-container" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-semibold mb-2">Tasks</h2>
+      <div id="tasks-container" class="space-y-2"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("access_token"); // Or pass via template context
+
+  const endpoints = {
+    deals: "/api/deals/",
+    contacts: "/api/contacts/",
+    teams: "/api/teams/",
+    tasks: "/api/tasks/"
+  };
+
+  Object.entries(endpoints).forEach(([key, url]) => {
+    fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById(`${key}-container`);
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-4 rounded shadow";
+        card.innerHTML = generateCardHTML(key, item);
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      console.error(`Error fetching ${key}:`, err);
+    });
+  });
+
+  function generateCardHTML(type, item) {
+    switch (type) {
+      case "deals":
+        return `<strong>${item.name}</strong><br>Status: ${item.status}<br>Amount: $${item.amount}`;
+      case "contacts":
+        return `<strong>${item.full_name}</strong><br>Email: ${item.email}`;
+      case "teams":
+        return `<strong>${item.name}</strong><br>Members: ${item.members?.length || 0}`;
+      case "tasks":
+        return `<strong>${item.title}</strong><br>Status: ${item.status}<br>Due: ${item.due_date}`;
+      default:
+        return `<strong>Unknown</strong>`;
+    }
+  }
+});
+</script>
+{% endblock %}

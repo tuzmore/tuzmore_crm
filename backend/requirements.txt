@@ -1,0 +1,28 @@
+# Django & REST Framework
+Django==5.0, <6.0
+djangorestframework==3.14.0
+
+# JWT Authentication
+djangorestframework-simplejwt==5.3.1
+
+# Swagger API Docs
+drf-yasg==1.21.7
+
+python-decouple==3.8
+
+# PostgreSQL support
+psycopg2-binary==2.9.9
+
+# Redis + Celery
+celery==5.3.6
+redis==5.0.1
+
+# Gunicorn for production server
+gunicorn==21.2.0
+
+# CORS & Security
+django-cors-headers==4.3.1
+django-environ==0.11.2
+
+# Stripe for payments
+stripe==8.4.0
