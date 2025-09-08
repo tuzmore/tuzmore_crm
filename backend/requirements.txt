@@ -26,3 +26,6 @@ django-environ==0.11.2
 
 # Stripe for payments
 stripe==8.4.0
+
+# Statics
+whitenoise==6.7.0

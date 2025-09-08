@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+
+<section class="min-h-screen bg-gray-100 py-10 px-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Page Title -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">📨 Inbox</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Inbox & Sent Messages -->
+      <div class="lg:col-span-2 bg-white shadow rounded-2xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-700">Messages</h2>
+          <div class="space-x-2">
+            <button id="inboxTab" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">Inbox</button>
+            <button id="sentTab" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300">Sent</button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-2 text-sm text-gray-600">Subject</th>
+                <th class="px-4 py-2 text-sm text-gray-600">From</th>
+                <th class="px-4 py-2 text-sm text-gray-600">To</th>
+                <th class="px-4 py-2 text-sm text-gray-600">Date</th>
+                <th class="px-4 py-2 text-sm text-gray-600">Status</th>
+                <th class="px-4 py-2 text-sm text-gray-600">Action</th>
+              </tr>
+            </thead>
+            <tbody id="messageTable" class="divide-y divide-gray-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Compose Message -->
+      <div class="bg-white shadow rounded-2xl p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">✉️ Compose</h2>
+        <form id="messageForm" class="space-y-4">
+          <div>
+            <label for="recipient" class="text-sm text-gray-600">Recipient (User ID)</label>
+            <input type="number" id="recipient" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" placeholder="2" required>
+          </div>
+          <div>
+            <label for="subject" class="text-sm text-gray-600">Subject</label>
+            <input type="text" id="subject" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" placeholder="Meeting Update" required>
+          </div>
+          <div>
+            <label for="body" class="text-sm text-gray-600">Message</label>
+            <textarea id="body" rows="4" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" placeholder="Type your message..." required></textarea>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg shadow hover:bg-blue-700">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const API_URL = "/api/inbox/";
+const token = localStorage.getItem("access");
+let currentTab = "inbox";
+
+async function fetchMessages() {
+  if (!token) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
+
+  try {
+    const res = await fetch(API_URL, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch messages");
+
+    const messages = await res.json();
+
+    let filtered = [];
+    if (currentTab === "inbox") {
+      filtered = messages.filter(m => m.recipient === getUserId());
+    } else {
+      filtered = messages.filter(m => m.sender === getUserId());
+    }
+
+    const table = document.getElementById("messageTable");
+    table.innerHTML = "";
+
+    filtered.forEach(msg => {
+      table.innerHTML += `
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 font-medium text-gray-800">${msg.subject}</td>
+          <td class="px-4 py-2 text-gray-600">${msg.sender_username}</td>
+          <td class="px-4 py-2 text-gray-600">${msg.recipient_username}</td>
+          <td class="px-4 py-2 text-gray-500">${new Date(msg.created_at).toLocaleString()}</td>
+          <td class="px-4 py-2">
+            <span class="px-2 py-1 rounded text-sm ${msg.read ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}">
+              ${msg.read ? "Read" : "Unread"}
+            </span>
+          </td>
+          <td class="px-4 py-2">
+            <button onclick="markAsRead(${msg.id})" class="text-blue-600 hover:underline">Mark Read</button>
+          </td>
+        </tr>
+      `;
+    });
+  } catch (err) {
+    console.error("❌ Error fetching messages:", err);
+  }
+}
+
+async function sendMessage(e) {
+  e.preventDefault();
+
+  const subject = document.getElementById("subject").value;
+  const body = document.getElementById("body").value;
+  const recipient = document.getElementById("recipient").value;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ subject, body, recipient })
+    });
+
+    if (!res.ok) {
+      const errData = await res.json();
+      alert("❌ Failed: " + JSON.stringify(errData));
+      return;
+    }
+
+    document.getElementById("messageForm").reset();
+    fetchMessages();
+    alert("✅ Message sent!");
+  } catch (err) {
+    console.error("❌ Error sending message:", err);
+  }
+}
+
+async function markAsRead(id) {
+  try {
+    const res = await fetch(`${API_URL}${id}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ read: true })
+    });
+
+    if (res.ok) fetchMessages();
+  } catch (err) {
+    console.error("❌ Error marking as read:", err);
+  }
+}
+
+// Helpers
+function getUserId() {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  return payload.user_id;
+}
+
+// Event listeners
+document.getElementById("messageForm").addEventListener("submit", sendMessage);
+document.getElementById("inboxTab").addEventListener("click", () => {
+  currentTab = "inbox";
+  document.getElementById("inboxTab").classList.replace("bg-gray-200", "bg-blue-600");
+  document.getElementById("inboxTab").classList.replace("text-gray-800", "text-white");
+  document.getElementById("sentTab").classList.replace("bg-blue-600", "bg-gray-200");
+  document.getElementById("sentTab").classList.replace("text-white", "text-gray-800");
+  fetchMessages();
+});
+document.getElementById("sentTab").addEventListener("click", () => {
+  currentTab = "sent";
+  document.getElementById("sentTab").classList.replace("bg-gray-200", "bg-blue-600");
+  document.getElementById("sentTab").classList.replace("text-gray-800", "text-white");
+  document.getElementById("inboxTab").classList.replace("bg-blue-600", "bg-gray-200");
+  document.getElementById("inboxTab").classList.replace("text-white", "text-gray-800");
+  fetchMessages();
+});
+
+fetchMessages();
+</script>
+
+{% endblock %}

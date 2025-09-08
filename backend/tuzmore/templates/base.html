@@ -7,16 +7,21 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="bg-red-100 text-gray-800">
+<body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+
+   
 
     <!-- ---Navbar--- -->
-    {% include "includes/navbar.html" %}
+    {% include "navbar.html" %}
 
-    <main>
+    <main class="flex-grow">
         {% block content %}{% endblock %}
     </main>
 
     <!-- ----footer --- -->
-    {% include "includes/footer.html" %}
+     {% include "footer.html" %}
+    
+    {% block scripts %}{% endblock %}
+
 </body>
 </html>

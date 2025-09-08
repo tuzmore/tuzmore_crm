@@ -1,0 +1,36 @@
+{% load static %}
+<header class="bg-white shadow-md fixed top-0 w-full z-50">
+  <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
+
+    <!-- Logo (Left) -->
+    <div class="flex items-center space-x-3">
+      <img src="{% static 'images/logo.jpeg' %}" alt="Tuzmore Logo" class="h-10 w-auto">
+      <a href="{% url 'landing' %}" 
+         class="text-2xl font-extrabold text-blue-700 tracking-tight">
+         Tuzmore
+      </a>
+    </div>
+
+    <!-- Centered Nav Links -->
+    <nav class="hidden md:flex flex-1 justify-center space-x-5 text-gray-700 font-semibold">
+      <a href="{% url 'solutions' %}" class="px-3 py-2 hover:text-blue-600 transition">Solutions</a>
+      <a href="#testimonials" class="px-3 py-2 hover:text-blue-600 transition">Blog</a>
+      <a href="#contact" class="px-3 py-2 hover:text-blue-600 transition">Contact Us</a>
+      <a href="{% url 'dashboard' %}" class="px-3 py-2 hover:text-blue-600 transition">Dashboard</a>
+    </nav>
+
+ 
+    <!-- Right Side Button -->
+    <div class="flex items-center">
+      <a href="{% url 'about' %}" class="px-3 py-2 hover:text-blue-600 transition">About Us</a>
+
+
+      <a href="{% url 'register' %}" 
+         class="ml-6 px-6 py-2 rounded-lg bg-blue-600 text-white font-medium 
+                hover:bg-blue-700 transition shadow">
+        Get Started
+      </a>
+    </div>
+
+  </div>
+</header>

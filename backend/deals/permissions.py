@@ -1,18 +1,36 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework import permissions
 
-class DealPermission(BasePermission):
-    # Custom role-based permission for Deals.
-    # - Admin full access.
-    # -Manager can view and update all deals
-    #  - Sales can only view/create/update their own deals
+class DealPermission(permissions.BasePermission):
+    """
+    Role-based permissions for Deal model.
+    - Admin: full access to all deals.
+    - Manager: full access but only for team members' deals.
+    - Sales: CRUD only on their own deals.
+    """
+
+    def has_permission(self, request, view):
+        # Must be authenticated
+        return request.user and request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
-        if request.user.role == 'admin':
-            # admin has full access
+        user = request.user
+
+        # Admin: full access
+        if user.role == "admin":
             return True
-        elif request.user.role == 'manager':
-            return request.method in SAFE_METHODS or request.method in ['PUT', 'PATCH']
-        elif request.user.role == 'sales':
-            return obj.owner == request.user
-        # only sales can access their deals
+
+        # Manager: access if they are owner OR if the deal owner is in their team
+        if user.role == "manager":
+            # 🔑 Example check: team relation via `user.team.members`
+            # Adjust this depending on your team model
+            if obj.owner == user:
+                return True
+            if hasattr(user, "team") and obj.owner in user.team.members.all():
+                return True
+            return False
+
+        # Sales: only access their own deals
+        if user.role == "sales":
+            return obj.owner == user
+
         return False

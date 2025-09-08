@@ -1,39 +1,99 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Login</h2>
-    {% if messages %}
-  <div class="mb-4">
-    {% for message in messages %}
-      <div class="text-red-600 text-sm text-center bg-red-100 p-2 rounded">
-        {{ message }}
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
-    <form method="POST" action="{% url 'login' %}" class="space-y-4">
-      {% csrf_token %}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+    
+    <form id="loginForm" class="space-y-5">
       <div>
-        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" name="username" id="username" required
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input 
+          type="text" 
+          id="username" 
+          placeholder="Username" 
+          required 
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+        >
       </div>
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" name="password" id="password" required
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Password" 
+          required 
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+        >
       </div>
-      <button type="submit"
-              class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
-        Sign In
+      <button 
+        type="submit" 
+        class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+      >
+        Login
       </button>
     </form>
-    <p class="mt-4 text-center text-sm text-gray-600">
-      Don't have an account?
-      <a href="{% url 'register' %}" class="text-blue-500 hover:underline">Register</a>
+
+    <p id="loginMessage" class="text-center text-red-500 mt-4"></p>
+
+    <p class="text-center text-gray-600 text-sm mt-6">
+      Don’t have an account? 
+      <a href="{% url 'register' %}" class="text-indigo-600 font-medium hover:underline">Register</a>
     </p>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  const loginMessage = document.getElementById('loginMessage');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // prevent page reload
+
+    loginMessage.innerText = ''; // clear previous messages
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!username || !password) {
+      loginMessage.innerText = 'Please enter both username and password.';
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // save tokens to localStorage
+        localStorage.setItem('access', data.access);
+        localStorage.setItem('refresh', data.refresh);
+
+        loginMessage.classList.remove('text-red-500');
+        loginMessage.classList.add('text-green-500');
+        loginMessage.innerText = 'Login successful! Redirecting...';
+
+        // redirect after short delay to let user see the message
+        setTimeout(() => {
+          window.location.href = '/dashboard/'; // hardcoded dashboard
+        }, 800);
+      } else {
+        // display backend error message
+        loginMessage.classList.remove('text-green-500');
+        loginMessage.classList.add('text-red-500');
+        loginMessage.innerText = data.detail || 'Invalid username or password.';
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      loginMessage.innerText = 'Something went wrong. Please try again.';
+    }
+  });
+});
+</script>
+
 {% endblock %}

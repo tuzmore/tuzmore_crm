@@ -20,6 +20,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .import views
+from django.shortcuts import render
 
 # Swagger setup
 schema_view = get_schema_view(
@@ -41,10 +42,20 @@ urlpatterns = [
     path('api/', include('teams.urls')),
     path('api/', include('deals.urls')),
     path('api/', include('tasks.urls')),
-    path('api/', include('dashboard.urls')),
+    path('api/', include('inbox.urls')),
+    path('api/dashboard/', include('dashboard.urls')),
     path('', views.landing_view, name='landing'),
-    path('dashboard/', views.dashboard_view, name='dashboard'),
     path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('register/', views.register_view, name='register'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('deals/', lambda request: render(request, 'deals.html'), name='deals'),
+    path('contacts/', lambda request: render(request, 'contacts.html'), name='contacts'),
+    path('tasks/', lambda request: render(request, 'tasks.html'), name='tasks'),
+    path('inbox/', lambda request: render(request, 'inbox.html'), name='inbox'),
+    path('api/', include('users.urls', namespace='users')),
+    path('about/', views.about_view, name='about'),
+    path('solutions/', views.solutions_view, name='solutions'),
+
+
 
 ]

@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from users.models import settings
 # Create your models here.
 
 class Contact(models.Model):
@@ -7,7 +7,7 @@ class Contact(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = models.CharField(blank=True, null=True)
-    owner = models.ForeignKey(User,
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, related_name='contacts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

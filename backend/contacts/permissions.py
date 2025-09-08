@@ -6,7 +6,7 @@ class IsAdminOrManager(BasePermission):
 
     def has_permission(self, request, view):
         if request.method in ['POST', 'PUT', 'PATCH', 'DELETE']:
-            return request.user.role in ['ADMIN', 'MANAGER']
+            return request.user.role in ['admin', 'manager']
         return True
     
 
@@ -15,6 +15,6 @@ class IsOwnerOrReadOnly(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method in ['PUT', 'PATCH', 'DELETE']:
-            return obj.owner == request.user or request.user.role in ['ADMIN', 'MANAGER']
+            return obj.owner == request.user or request.user.role in ['admin', 'manager']
         return True
 

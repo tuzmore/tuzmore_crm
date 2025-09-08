@@ -1,81 +1,194 @@
+final dashboard.html
 {% extends 'base.html' %}
-
-{% block title %}Dashboard{% endblock %}
-
+{% load static %}
 {% block content %}
-<div class="container mx-auto py-6">
-  <h1 class="text-3xl font-bold mb-6">Tuzmore CRM Dashboard</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div>
-      <h2 class="text-xl font-semibold mb-2">Deals</h2>
-      <div id="deals-container" class="space-y-2"></div>
+<div class="flex min-h-screen pt-20">
+  <!-- Sidebar -->
+  <aside class="w-22 bg-blue-900 text-white flex flex-col">
+    <div class="p-6 border-b border-blue-700">
+      <div class="flex items-center space-x-3">
+        <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-14 h-14 rounded-full
+        border-2 border-white">
+        <div>
+          <h2 class="text-lg font-semibold">Tuzmore</h2>
+          <p class="text-sm text-blue-300">CRM</p>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <h2 class="text-xl font-semibold mb-2">Contacts</h2>
-      <div id="contacts-container" class="space-y-2"></div>
+    <nav class="flex-1 p-4 space-y-1">
+      <a href="/dashboard/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📊 Dashboard</a>
+      <a href="/calendar/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📅 Calendar</a>
+      <a href="/inbox/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📩 Inbox</a>
+      <a href="/deals/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">💼 Deals</a>
+      <a href="/contacts/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👤 Contacts</a>
+      <a href="/tasks/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">✅ Tasks</a>
+      <a href="/teams/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👥 Teams</a>
+    </nav>
+
+    <div class="p-4 border-t border-blue-700">
+      <a href="/logout/" class="block py-2 px-3 rounded bg-red-600 hover:bg-red-700 text-center">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-2 p-2">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-2">
+      <h1 class="text-3xl font-bold">Dashboard</h1>
+      <!-- Optional Search bar -->
+      <div class="relative w-56">
+        <input type="text" placeholder="Search..." 
+              class="w-full border rounded-lg pl-3 pr-10 py-1.5 text-sm focus:outline-none 
+              focus:ring-2 focus:ring-blue-500" />
+        <span class="absolute right-3 top-2 text-gray-400 text-sm">🔍</span>
+      </div>
     </div>
 
-    <div>
-      <h2 class="text-xl font-semibold mb-2">Teams</h2>
-      <div id="teams-container" class="space-y-2"></div>
+    <!-- Top Row: This Week Income + Deals Overview + Calendar -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-2 mb-2">
+      <!-- This Week Income -->
+      <div class="bg-blue-900 rounded-lg shadow p-2">
+        <h2 class="text-white text-sm">This Week Income</h2>
+        <p class="text-2xl font-bold text-blue-600">$1250</p>
+      </div>
+
+      <!-- Deals Overview (Graph) - spans 2 columns -->
+      <div class="bg-white rounded-lg shadow p-2 lg:col-span-2">
+        <h2 class="text-lg font-semibold mb-3">Deals Overview</h2>
+        <canvas id="dealsChart" class="w-3/4 h-20"></canvas>
+      </div>
+
+      <!-- Calendar -->
+      <div class="bg-white rounded-lg shadow p-2">
+        <h2 class="text-lg font-semibold mb-3">Calendar</h2>
+        <div id="calendar" class="text-center text-gray-600">📅 Coming soon</div>
+      </div>
     </div>
 
-    <div>
-      <h2 class="text-xl font-semibold mb-2">Tasks</h2>
-      <div id="tasks-container" class="space-y-2"></div>
+    <!-- Stats Row: Total Deals & Total Contacts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- Total Deals -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-gray-600 text-sm">Total Deals</h2>
+        <p class="text-2xl font-bold text-blue-700" id="dealsCount">0</p>
+      </div>
+
+      <!-- Total Contacts -->
+      <div class="bg-white rounded-lg shadow p-2">
+        <h2 class="text-gray-600 text-sm">Total Contacts</h2>
+        <p class="text-2xl font-bold text-green-600" id="contactsCount">0</p>
+      </div>
     </div>
-  </div>
+
+    <!-- Latest Deals & Contacts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+      <!-- Latest Deals -->
+      <div class="bg-white rounded-lg shadow p-2">
+        <h2 class="text-lg font-semibold mb-3">📌 Recent Deals</h2>
+        <table class="w-1/2 text-left text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-3 py-2">Name</th>
+              <th class="px-3 py-2">Amount</th>
+              <th class="px-3 py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody id="latestDeals" class="divide-y divide-gray-200"></tbody>
+        </table>
+      </div>
+
+      <!-- Recent Contacts -->
+      <div class="bg-white rounded-lg shadow p-2">
+        <h2 class="text-lg font-semibold mb-3">👥 Recent Contacts</h2>
+        <ul id="latestContacts" class="space-y-1 text-sm"></ul>
+      </div>
+    </div>
+  </main>
 </div>
 
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("access_token"); // Or pass via template context
+const token = localStorage.getItem("access");
 
-  const endpoints = {
-    deals: "/api/deals/",
-    contacts: "/api/contacts/",
-    teams: "/api/teams/",
-    tasks: "/api/tasks/"
-  };
+// API URLs
+const API_DEALS = "/api/deals/";
+const API_CONTACTS = "/api/contacts/";
 
-  Object.entries(endpoints).forEach(([key, url]) => {
-    fetch(url, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById(`${key}-container`);
-      data.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "bg-white p-4 rounded shadow";
-        card.innerHTML = generateCardHTML(key, item);
-        container.appendChild(card);
-      });
-    })
-    .catch(err => {
-      console.error(`Error fetching ${key}:`, err);
+// Fetch deals count + latest
+async function fetchDeals() {
+  try {
+    const res = await fetch(API_DEALS, { headers: { Authorization: `Bearer ${token}` }});
+    if (!res.ok) throw new Error("Failed deals");
+    const deals = await res.json();
+
+    document.getElementById("dealsCount").innerText = deals.length;
+
+    const latest = deals.slice(0, 5);
+    const tbody = document.getElementById("latestDeals");
+    tbody.innerHTML = "";
+    latest.forEach(d => {
+      tbody.innerHTML += `
+        <tr class="hover:bg-gray-50">
+          <td class="px-3 py-2 font-medium">${d.name}</td>
+          <td class="px-3 py-2">$${d.amount}</td>
+          <td class="px-3 py-2">${d.status}</td>
+        </tr>
+      `;
     });
-  });
 
-  function generateCardHTML(type, item) {
-    switch (type) {
-      case "deals":
-        return `<strong>${item.name}</strong><br>Status: ${item.status}<br>Amount: $${item.amount}`;
-      case "contacts":
-        return `<strong>${item.full_name}</strong><br>Email: ${item.email}`;
-      case "teams":
-        return `<strong>${item.name}</strong><br>Members: ${item.members?.length || 0}`;
-      case "tasks":
-        return `<strong>${item.title}</strong><br>Status: ${item.status}<br>Due: ${item.due_date}`;
-      default:
-        return `<strong>Unknown</strong>`;
-    }
+    // Chart.js
+    const ctx = document.getElementById("dealsChart");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: deals.map(d => d.name).slice(0, 5),
+        datasets: [{
+          label: "Amount",
+          data: deals.map(d => d.amount).slice(0, 5),
+          backgroundColor: "rgba(59,130,246,0.6)"
+        }]
+      }
+    });
+  } catch (err) {
+    console.error(err);
   }
-});
+}
+
+// Fetch contacts count + latest
+async function fetchContacts() {
+  try {
+    const res = await fetch(API_CONTACTS, { headers: { Authorization: `Bearer ${token}` }});
+    if (!res.ok) throw new Error("Failed contacts");
+    const contacts = await res.json();
+
+    document.getElementById("contactsCount").innerText = contacts.length;
+
+    const latest = contacts.slice(0, 5);
+    const ul = document.getElementById("latestContacts");
+    ul.innerHTML = "";
+    latest.forEach(c => {
+      ul.innerHTML += `
+        <li class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+            ${c.first_name[0] || "?"}
+          </div>
+          <div>
+            <p class="font-medium">${c.first_name} ${c.last_name}</p>
+            <p class="text-sm text-gray-500">${c.email}</p>
+          </div>
+        </li>
+      `;
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+fetchDeals();
+fetchContacts();
 </script>
+
 {% endblock %}
