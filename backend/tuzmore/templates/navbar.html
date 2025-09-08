@@ -1,4 +1,6 @@
 {% load static %}
+
+{% if request.path != '/dashboard/' %}
 <header class="bg-white shadow-md fixed top-0 w-full z-50">
   <div class="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
 
@@ -19,12 +21,9 @@
       <a href="{% url 'dashboard' %}" class="px-3 py-2 hover:text-blue-600 transition">Dashboard</a>
     </nav>
 
- 
     <!-- Right Side Button -->
     <div class="flex items-center">
       <a href="{% url 'about' %}" class="px-3 py-2 hover:text-blue-600 transition">About Us</a>
-
-
       <a href="{% url 'register' %}" 
          class="ml-6 px-6 py-2 rounded-lg bg-blue-600 text-white font-medium 
                 hover:bg-blue-700 transition shadow">
@@ -34,3 +33,4 @@
 
   </div>
 </header>
+{% endif %}
