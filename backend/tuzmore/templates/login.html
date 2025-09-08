@@ -7,28 +7,16 @@
     <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
     
     <form id="loginForm" class="space-y-5">
+      {% csrf_token %}
       <div>
-        <input 
-          type="text" 
-          id="username" 
-          placeholder="Username" 
-          required 
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-        >
+        <input type="text" id="username" placeholder="Username" required
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"/>
       </div>
       <div>
-        <input 
-          type="password" 
-          id="password" 
-          placeholder="Password" 
-          required 
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-        >
+        <input type="password" id="password" placeholder="Password" required
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"/>
       </div>
-      <button 
-        type="submit" 
-        class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
-      >
+      <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition">
         Login
       </button>
     </form>
@@ -43,56 +31,46 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('loginForm');
-  const loginMessage = document.getElementById('loginMessage');
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // prevent page reload
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const loginMessage = document.getElementById("loginMessage");
+  loginMessage.innerText = "";
 
-    loginMessage.innerText = ''; // clear previous messages
+  if (!username || !password) {
+    loginMessage.innerText = "Please enter both username and password.";
+    return;
+  }
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+  try {
+    const res = await fetch("/api/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken
+      },
+      body: JSON.stringify({username, password}),
+    });
 
-    if (!username || !password) {
-      loginMessage.innerText = 'Please enter both username and password.';
-      return;
-    }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Login failed");
 
-    try {
-      const response = await fetch('/api/login/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+    loginMessage.classList.remove("text-red-500");
+    loginMessage.classList.add("text-green-500");
+    loginMessage.innerText = "Login successful! Redirecting...";
 
-      const data = await response.json();
+    setTimeout(() => {
+      window.location.href = "/dashboard/";
+    }, 800);
 
-      if (response.ok) {
-        // save tokens to localStorage
-        localStorage.setItem('access', data.access);
-        localStorage.setItem('refresh', data.refresh);
-
-        loginMessage.classList.remove('text-red-500');
-        loginMessage.classList.add('text-green-500');
-        loginMessage.innerText = 'Login successful! Redirecting...';
-
-        // redirect after short delay to let user see the message
-        setTimeout(() => {
-          window.location.href = '/dashboard/'; // hardcoded dashboard
-        }, 800);
-      } else {
-        // display backend error message
-        loginMessage.classList.remove('text-green-500');
-        loginMessage.classList.add('text-red-500');
-        loginMessage.innerText = data.detail || 'Invalid username or password.';
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      loginMessage.innerText = 'Something went wrong. Please try again.';
-    }
-  });
+  } catch (err) {
+    loginMessage.classList.remove("text-green-500");
+    loginMessage.classList.add("text-red-500");
+    loginMessage.innerText = err.message;
+  }
 });
 </script>
 

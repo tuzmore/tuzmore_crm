@@ -4,15 +4,15 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
-class Message(models.Model):
-    subject = models.CharField(max_length=255)
-    body = models.TextField()
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='sent_nessages')
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-            related_name='received_messages')
-    read = models.BooleanField(default=False)
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    received_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+            on_delete=models.SET_NULL, null=True, blank=True, related_name='received_messages')
 
     def __str__(self):
-        return f"{self.subject} - From {self.sender} To {self.recipient}"
+        return f"{self.name} - {self.email}"
+

@@ -1,47 +1,12 @@
-from rest_framework.permissions import BasePermission
+from rest_framework import permissions
 
-class MessagePermission(BasePermission):
+class IsAdminUserReadOnly(permissions.BasePermission):
     """
-    Role-based permission for Admin, Manager, Sales.
+    Only admin users can view the messages.
+    Anyone can create (POST) messages.
     """
 
     def has_permission(self, request, view):
-        role = getattr(request.user, 'role', None)
-
-        # Allow if authenticated
-        if not request.user.is_authenticated:
-            return False
-
-        # Admin = Full access
-        if role == 'admin':
-            return True
-
-        # Manager = can view, create, update, delete
-        if role == 'manager' and request.method in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
-            return True
-
-        # Sales = can view and create only
-        if role == 'sales' and request.method in ['GET', 'POST']:
-            return True
-
-        return False
-
-    def has_object_permission(self, request, view, obj):
-        role = getattr(request.user, 'role', None)
-
-        if role == 'admin':
-            return True
-
-        if role == 'manager':
-            return True
-
-        if role == 'sales':
-            # Sales can only access objects they own
-            return (
-                getattr(obj, 'assigned_to', None) == request.user or
-                getattr(obj, 'user', None) == request.user or
-                getattr(obj, 'sender', None) == request.user or
-                getattr(obj, 'recipient', None) == request.user
-            )
-
-        return False
+        if request.method == 'POST':
+            return True  # anyone can send message
+        return request.user and request.user.is_staff

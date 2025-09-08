@@ -21,7 +21,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .import views
 from django.shortcuts import render
-
 # Swagger setup
 schema_view = get_schema_view(
     openapi.Info(
@@ -51,10 +50,12 @@ urlpatterns = [
     path('deals/', lambda request: render(request, 'deals.html'), name='deals'),
     path('contacts/', lambda request: render(request, 'contacts.html'), name='contacts'),
     path('tasks/', lambda request: render(request, 'tasks.html'), name='tasks'),
-    path('inbox/', lambda request: render(request, 'inbox.html'), name='inbox'),
     path('api/', include('users.urls', namespace='users')),
     path('about/', views.about_view, name='about'),
     path('solutions/', views.solutions_view, name='solutions'),
+    path('contact/', views.contact_us_view, name='contact'),
+    path('api/activate/<uidb64>/<token>/', views.activate_account, name='api-activate'),
+
 
 
 
