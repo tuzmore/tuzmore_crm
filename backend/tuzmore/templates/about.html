@@ -1,98 +1,136 @@
-{% extends "base.html" %}
-{% block title %}About Us - Tuzmore{% endblock %}
-
+{% extends 'base.html' %}
+{% block title %}About Us{% endblock %}
+{% load static %}
 {% block content %}
-<section class="bg-gradient-to-br from-blue-50 via-white to-gray-50 py-20">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12">
 
-    <!-- Hero Section -->
-    <div class="text-center mb-20">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4 items-center">
-          🚀 <span class="ml-2">About Tuzmore</span>
-        </h2>
-      <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Tuzmore is a modern CRM SaaS designed to simplify sales, boost productivity, and empower businesses
-        with tools that truly make a difference.
-      </p>
-    </div>
-
-    <!-- Why Tuzmore Started -->
-    <div class="bg-gradient-to-r from-white to-blue-50 shadow-xl rounded-3xl p-12 mb-30">
-      <h2 class="text-4xl font-extrabold text-gray-900 mb-10 text-center">
-        Why Tuzmore Was Born 🚀
-      </h2>
-      <p class="text-gray-700 text-lg leading-relaxed text-center max-w-4xl mx-auto">
-        We saw businesses struggling every day — losing <span class="font-semibold text-blue-600">time, money, 
-          and clients</span>.  
-        Emails were scattered,<br> payments were delayed, meetings were missed, and <br>valuable leads slipped away.  
-        Work wasn’t organized, and <br> teams wasted hours managing tools instead of growing their business.  
-      </p>
-      <p class="text-gray-700 text-lg leading-relaxed text-center max-w-4xl mx-auto mt-6">
-        That’s why <span class="font-bold text-blue-600">Tuzmore</span> was created:  
-        to bring everything into one smart, easy-to-use dashboard. <br> 
-        With Tuzmore, no more chaos — you manage your <span class="font-semibold">clients, leads, projects, payments, and meetings</span> 
-        all in one place, <br>saving time so you can focus on what really matters:  
-        <span class="italic">growing your business</span>.
-      </p>
-    </div>
-
-    <!-- Mission & Vision -->
-    <div class="grid md:grid-cols-2 gap-12 mt-20 mb-20">
-      <div class="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
-          🚀 <span class="ml-2">Our Mission</span>
-        </h2>
-        <p class="text-gray-600 leading-relaxed text-lg">
-          To empower small and growing businesses with enterprise-grade CRM tools 
-          that are <span class="font-semibold">easy to use, affordable, and scalable</span>.  
-          Every team — from startups to enterprises — deserves access to powerful software that drives growth.
-        </p>
-      </div>
-      <div class="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4 flex items-center">
-          🌍 <span class="ml-2">Our Vision</span>
-        </h2>
-        <p class="text-gray-600 leading-relaxed text-lg">
-          We envision a world where businesses spend less time fighting messy spreadsheets and more time 
-          <span class="font-semibold">closing deals, delighting customers, and scaling up</span>.  
-          Tuzmore makes CRM simple, modern, and accessible to everyone.
-        </p>
-      </div>
-    </div>
-
-    <!-- What Tuzmore Solves -->
-    <div class="grid md:grid-cols-3 gap-8 text-center mt-50 mb-20">
-      <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
-        <h3 class="font-semibold text-xl text-blue-600 mb-3">Disconnected Teams</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Tuzmore unites your sales, managers, and admins into one platform with secure role-based permissions.
-        </p>
-      </div>
-      <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
-        <h3 class="font-semibold text-xl text-blue-600 mb-3">Messy Data</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Say goodbye to scattered spreadsheets — manage contacts, deals, tasks, and inboxes in one central system.
-        </p>
-      </div>
-      <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
-        <h3 class="font-semibold text-xl text-blue-600 mb-3">Lost Opportunities</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Never miss a lead again. Track pipelines, measure revenue, and close deals with automated insights.
-        </p>
-      </div>
-    </div>
-
-    <!-- Call to Action -->
-    <div class="text-center">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6">
-        Ready to grow your business with <span class="text-blue-600">Tuzmore</span>?
-      </h2>
-      <a href="{% url 'register' %}" 
-        class="inline-block px-8 py-4 rounded-xl bg-blue-600 text-white text-lg font-semibold shadow-lg hover:bg-blue-700 hover:scale-105 transform transition">
-        🚀 Get Started Today
-      </a>
-    </div>
-
+<!-- About Us Section -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-6">About Tuzmore</h2>
+    <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+      Tuzmore was founded to help freelancers, agencies, and businesses manage their clients, 
+      projects, and workflows seamlessly. We believe in simplicity, clarity, and giving you tools 
+      that actually save time and grow your business.
+    </p>
   </div>
 </section>
+
+<!-- Mission & Vision -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4 grid gap-8 md:grid-cols-2">
+    <div class="bg-gray-50 p-8 rounded-2xl shadow hover:shadow-lg transition">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-3">Our Mission</h3>
+      <p class="text-gray-600 leading-relaxed">
+        To empower businesses and individuals with tools that simplify client management, 
+        improve communication, and streamline workflow — all in one platform.
+      </p>
+    </div>
+    <div class="bg-gray-50 p-8 rounded-2xl shadow hover:shadow-lg transition">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-3">Our Vision</h3>
+      <p class="text-gray-600 leading-relaxed">
+        To become the trusted platform for freelancers, agencies, and enterprises worldwide, 
+        enabling them to focus on growth instead of admin chaos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Tuzmore -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Why Choose Tuzmore?</h2>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-2 text-blue-600">🚀 Simplicity</h3>
+        <p class="text-gray-600 text-sm">No clutter, just the tools you need to run your business effectively.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-2 text-green-600">🤝 Client Focused</h3>
+        <p class="text-gray-600 text-sm">Designed to help you build better relationships and close more deals.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+        <h3 class="text-xl font-semibold mb-2 text-purple-600">📈 Growth Driven</h3>
+        <p class="text-gray-600 text-sm">Every feature is built to save time and help you scale faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-20 bg-white relative">
+  <div class="max-w-3xl mx-auto px-6 text-center relative">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">Meet the Team</h2>
+
+    <!-- Slides Wrapper -->
+    <div id="team-slides" class="overflow-hidden w-full max-w-md mx-auto relative">
+      
+      <!-- Founder -->
+      <div class="slide active bg-gray-50 rounded-2xl shadow-md p-8 flex flex-col items-center transition">
+        <div class="w-24 h-24 rounded-full overflow-hidden shadow-md border-2 border-gray-200 mb-4">
+          <img src="{% static 'images/founder.jpg' %}" alt="Founder & CEO"
+               class="w-full h-full object-cover">
+        </div>
+        <h3 class="text-xl font-semibold text-gray-800">Mohamed Hassan</h3>
+        <p class="text-blue-600 text-sm font-medium mb-3">Founder & CEO</p>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          A Software Engineer & Entrepreneur passionate about solving real-world problems. 
+          Mohamed founded Tuzmore to remove the chaos of managing clients, deals, and communication.
+        </p>
+      </div>
+
+      <!-- Partner -->
+      <div class="slide hidden bg-gray-50 rounded-2xl shadow-md p-8 flex flex-col items-center transition">
+        <div class="w-24 h-24 rounded-full overflow-hidden shadow-md border-2 border-gray-200 mb-4">
+          <img src="{% static 'images/founder.jpg' %}" alt="Co-Founder & Media Lead"
+               class="w-full h-full object-cover">
+        </div>
+        <h3 class="text-xl font-semibold text-gray-800">[Partner Name]</h3>
+        <p class="text-green-600 text-sm font-medium mb-3">Co-Founder & Media Lead</p>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Focused on media, communications, and outreach, he ensures Tuzmore connects with businesses 
+          and clients effectively with a professional, client-first approach.
+        </p>
+      </div>
+    </div>
+
+    <!-- Prev Button (outside left edge) -->
+    <button id="prev-btn" 
+      class="absolute top-1/2 -translate-y-1/2 left-0 text-4xl font-bold text-gray-400 hover:text-blue-600 transition">
+      &lt;
+    </button>
+
+    <!-- Next Button (outside right edge) -->
+    <button id="next-btn" 
+      class="absolute top-1/2 -translate-y-1/2 right-0 text-4xl font-bold text-gray-400 hover:text-blue-600 transition">
+      &gt;
+    </button>
+  </div>
+</section>
+
+<!-- Carousel Script -->
+<script>
+  const slides = document.querySelectorAll(".slide");
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("hidden", i !== index);
+    });
+  }
+
+  document.getElementById("next-btn").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  });
+
+  document.getElementById("prev-btn").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  });
+</script>
+
+
+
+
+
 {% endblock %}

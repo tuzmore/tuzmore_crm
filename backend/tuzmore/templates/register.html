@@ -1,56 +1,84 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}Register{% endblock %}
 {% block content %}
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="w-full max-w-sm p-6 bg-white rounded-2xl shadow-lg">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
 
+<div class="flex justify-center items-center min-h-screen bg-gray-50 mt-6">
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+    
+    <!-- Title -->
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">
+      Create your Tuzmore Account
+    </h2>
+    <p class="text-center text-gray-500 mb-6 text-sm">
+      Sign up to access your dashboard and tools.
+    </p>
+
+    <!-- Form -->
     <form id="registerForm" class="space-y-4">
-      {% csrf_token %}
-      <input type="text" id="username" placeholder="Username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"/>
-      <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"/>
-      <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"/>
-      <button type="submit" class="w-full py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200">Register</button>
+      <input type="text" id="username" placeholder="Username" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none">
+
+      <input type="email" id="email" placeholder="Email address" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none">
+
+      <input type="password" id="password" placeholder="Password" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none">
+
+      <input type="password" id="password2" placeholder="Confirm password" required
+        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none">
+
+      <button type="submit"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-300">
+        Register
+      </button>
     </form>
 
-    <p id="error" class="mt-4 text-center text-red-500 text-sm"></p>
-    <p class="mt-4 text-center text-gray-600 text-sm">
-      Already have an account? <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login</a>
+    <!-- Register Message -->
+    <p id="registerMessage" class="mt-4 text-center text-sm"></p>
+
+    <!-- Login Redirect -->
+    <p class="text-center text-gray-600 mt-6 text-sm">
+      Already have an account?
+      <a href="{% url 'login' %}" class="text-blue-600 font-medium hover:underline">Log in</a>
     </p>
   </div>
 </div>
 
 <script>
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
+document.getElementById("registerForm").addEventListener("submit", async function(e) {
   e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-  if (!username || !email || !password) {
-    document.getElementById("error").innerText = "All fields are required.";
-    return;
-  }
+  const data = {
+    username: document.getElementById("username").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
+    password2: document.getElementById("password2").value
+  };
 
   try {
     const res = await fetch("/api/register/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrftoken
-      },
-      body: JSON.stringify({username, email, password})
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || "Registration failed");
+    const result = await res.json();
+    const msg = document.getElementById("registerMessage");
 
-    alert("Registration successful! Please check your email to verify your account.");
-    window.location.href = "{% url 'login' %}";
-  } catch (err) {
-    document.getElementById("error").innerText = err.message;
+    if (res.ok) {
+      msg.textContent = "✅ Registration successful! Check your email to verify your account.";
+      msg.className = "text-green-600 text-center mt-4";
+      document.getElementById("registerForm").reset();
+    } else {
+      msg.textContent = result.detail || JSON.stringify(result);
+      msg.className = "text-red-600 text-center mt-4";
+    }
+  } catch (error) {
+    console.error(error);
+    document.getElementById("registerMessage").textContent = "❌ Something went wrong. Try again.";
+    document.getElementById("registerMessage").className = "text-red-600 text-center mt-4";
   }
 });
 </script>
+
 {% endblock %}

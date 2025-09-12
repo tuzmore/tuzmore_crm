@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Hello {{ user.username }},</h2>
+    <p>Thanks for signing up for Tuzmore CRM!</p>
+    <p>Click the link below to activate your account:</p>
+    <p><a href="{{ activation_link }}">Activate Account</a></p>
+    <p>If you didn’t request this, you can safely ignore this email.</p>
+    <br>
+    <p>— The Tuzmore Team</p>
+{% endblock %}

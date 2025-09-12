@@ -54,7 +54,8 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('solutions/', views.solutions_view, name='solutions'),
     path('contact/', views.contact_us_view, name='contact'),
-    path('api/activate/<uidb64>/<token>/', views.activate_account, name='api-activate'),
+    path('inbox/', views.inbox_view, name='inbox')
+
 
 
 

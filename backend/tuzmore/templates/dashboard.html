@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
 
 <div class="flex min-h-screen">
@@ -7,7 +8,7 @@
   <aside class="w-22 bg-blue-900 text-white flex flex-col">
     <div class="p-6 border-b border-blue-700">
       <div class="flex items-center space-x-3">
-        <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-14 h-14 rounded-full
+        <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-14 h-14 rounded-full 
         border-2 border-white">
         <div>
           <h2 class="text-lg font-semibold">Tuzmore</h2>
@@ -18,12 +19,12 @@
 
     <nav class="flex-1 p-4 space-y-1">
       <a href="/dashboard/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📊 Dashboard</a>
-      <a href="/calendar/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📅 Calendar</a>
-      <a href="/inbox/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📩 Inbox</a>
       <a href="/deals/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">💼 Deals</a>
       <a href="/contacts/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👤 Contacts</a>
-      <a href="/tasks/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">✅ Tasks</a>
-      <a href="/teams/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👥 Teams</a>
+      <a href="/inbox/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📩 Inbox</a>
+      <a href="#" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📅 Calendar</a>
+      <a href="#" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">✅ Tasks</a>
+      <a href="#" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👥 Teams</a>
     </nav>
 
     <div class="p-4 border-t border-blue-700">
@@ -34,59 +35,58 @@
   <!-- Main Content -->
   <main class="flex-2 p-6">
     <!-- Header -->
-    <div class="flex justify-between items-center mb-2">
+    <div class="flex justify-between items-center mb-4">
       <h1 class="text-3xl font-bold">Dashboard</h1>
-      <!-- Optional Search bar -->
       <div class="relative w-56">
         <input type="text" placeholder="Search..." 
-              class="w-full border rounded-lg pl-3 pr-10 py-1.5 text-sm focus:outline-none 
-              focus:ring-2 focus:ring-blue-500" />
+              class="w-full border rounded-lg pl-3 pr-10 py-1.5 text-sm focus:outline-none focus:ring-2
+            focus:ring-blue-500" />
         <span class="absolute right-3 top-2 text-gray-400 text-sm">🔍</span>
       </div>
     </div>
 
     <!-- Top Row: This Week Income + Deals Overview + Calendar -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-2 mb-2">
-      <!-- This Week Income -->
-      <div class="bg-blue-900 rounded-lg shadow p-2">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+      <div class="bg-blue-900 rounded-lg shadow p-4">
         <h2 class="text-white text-sm">This Week Income</h2>
-        <p class="text-2xl font-bold text-blue-600">$1250</p>
+        <p class="text-2xl font-bold text-blue-300">$1250</p>
       </div>
 
-      <!-- Deals Overview (Graph) - spans 2 columns -->
-      <div class="bg-white rounded-lg shadow p-2 lg:col-span-2">
+      <div class="bg-white rounded-lg shadow p-4 lg:col-span-2">
         <h2 class="text-lg font-semibold mb-3">Deals Overview</h2>
-        <canvas id="dealsChart" class="w-3/4 h-20"></canvas>
+        <canvas id="dealsChart" class="w-full h-28"></canvas>
       </div>
 
-      <!-- Calendar -->
-      <div class="bg-white rounded-lg shadow p-2">
+      <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">Calendar</h2>
-        <div id="calendar" class="text-center text-gray-600">📅 Coming soon</div>
+        <div id="calendar" class="text-center text-gray-500 py-10">📅 Coming soon</div>
       </div>
     </div>
 
-    <!-- Stats Row: Total Deals & Total Contacts -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-      <!-- Total Deals -->
-      <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-gray-600 text-sm">Total Deals</h2>
+    <!-- Stats Row: Total Deals, Total Contacts, Inbox -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h2 class="text-gray-600 text-sm mb-2">Total Deals</h2>
         <p class="text-2xl font-bold text-blue-700" id="dealsCount">0</p>
       </div>
 
-      <!-- Total Contacts -->
-      <div class="bg-white rounded-lg shadow p-2">
-        <h2 class="text-gray-600 text-sm">Total Contacts</h2>
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h2 class="text-gray-600 text-sm mb-2">Total Contacts</h2>
         <p class="text-2xl font-bold text-green-600" id="contactsCount">0</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-6 text-center">
+        <h2 class="text-gray-600 text-sm mb-2">Inbox</h2>
+        <p class="text-2xl font-bold text-purple-600" id="inboxCount">0</p>
       </div>
     </div>
 
-    <!-- Latest Deals & Contacts -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+    <!-- Latest Deals, Contacts, Inbox -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Latest Deals -->
-      <div class="bg-white rounded-lg shadow p-2">
+      <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">📌 Recent Deals</h2>
-        <table class="w-1/2 text-left text-sm">
+        <table class="w-full text-left text-sm">
           <thead class="bg-gray-100">
             <tr>
               <th class="px-3 py-2">Name</th>
@@ -99,9 +99,15 @@
       </div>
 
       <!-- Recent Contacts -->
-      <div class="bg-white rounded-lg shadow p-2">
+      <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">👥 Recent Contacts</h2>
-        <ul id="latestContacts" class="space-y-1 text-sm"></ul>
+        <ul id="latestContacts" class="space-y-2 text-sm"></ul>
+      </div>
+
+      <!-- Recent Inbox -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h2 class="text-lg font-semibold mb-3">📩 Recent Inbox</h2>
+        <ul id="latestInbox" class="space-y-2 text-sm"></ul>
       </div>
     </div>
   </main>
@@ -115,6 +121,7 @@ const token = localStorage.getItem("access");
 // API URLs
 const API_DEALS = "/api/deals/";
 const API_CONTACTS = "/api/contacts/";
+const API_INBOX = "/api/inbox/";
 
 // Fetch deals count + latest
 async function fetchDeals() {
@@ -138,7 +145,6 @@ async function fetchDeals() {
       `;
     });
 
-    // Chart.js
     const ctx = document.getElementById("dealsChart");
     new Chart(ctx, {
       type: "bar",
@@ -176,7 +182,7 @@ async function fetchContacts() {
           </div>
           <div>
             <p class="font-medium">${c.first_name} ${c.last_name}</p>
-            <p class="text-sm text-gray-500">${c.email}</p>
+            <p class="text-gray-500 text-sm">${c.email}</p>
           </div>
         </li>
       `;
@@ -186,8 +192,35 @@ async function fetchContacts() {
   }
 }
 
+// Fetch inbox count + latest
+async function fetchInbox() {
+  try {
+    const res = await fetch(API_INBOX, { headers: { Authorization: `Bearer ${token}` }});
+    if (!res.ok) throw new Error("Failed inbox");
+    const inbox = await res.json();
+
+    document.getElementById("inboxCount").innerText = inbox.length;
+
+    const latest = inbox.slice(0, 5);
+    const ul = document.getElementById("latestInbox");
+    ul.innerHTML = "";
+    latest.forEach(msg => {
+      ul.innerHTML += `
+        <li class="border-b border-gray-200 pb-2">
+          <p class="font-medium">${msg.subject}</p>
+          <p class="text-gray-500 text-sm">${msg.sender_name} • ${msg.created_at}</p>
+        </li>
+      `;
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// Initialize all fetches
 fetchDeals();
 fetchContacts();
+fetchInbox();
 </script>
 
 {% endblock %}
