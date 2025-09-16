@@ -1,22 +1,25 @@
+final dashboard.html
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
+<!-- Layout Wrapper -->
 <div class="flex min-h-screen">
+
   <!-- Sidebar -->
   <aside class="w-22 bg-blue-900 text-white flex flex-col">
-    <div class="p-6 border-b border-blue-700">
-      <div class="flex items-center space-x-3">
-        <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-14 h-14 rounded-full 
-        border-2 border-white">
-        <div>
-          <h2 class="text-lg font-semibold">Tuzmore</h2>
-          <p class="text-sm text-blue-300">CRM</p>
-        </div>
+    <!-- Logo -->
+    <div class="p-6 border-b border-blue-700 flex items-center space-x-3">
+      <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-14 h-14 rounded-full border-2
+      border-white">
+      <div>
+        <h2 class="text-lg font-semibold">Tuzmore</h2>
+        <p class="text-sm text-blue-300">CRM</p>
       </div>
     </div>
 
+    <!-- Nav Links -->
     <nav class="flex-1 p-4 space-y-1">
       <a href="/dashboard/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">📊 Dashboard</a>
       <a href="/deals/" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">💼 Deals</a>
@@ -27,63 +30,67 @@
       <a href="#" class="flex items-center py-2 px-3 rounded hover:bg-blue-700">👥 Teams</a>
     </nav>
 
+    <!-- Logout -->
     <div class="p-4 border-t border-blue-700">
       <a href="/logout/" class="block py-2 px-3 rounded bg-red-600 hover:bg-red-700 text-center">🚪 Logout</a>
     </div>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-2 p-6">
+  <main class="flex-2 p-6 md:ml-64">
     <!-- Header -->
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-3xl font-bold">Dashboard</h1>
-      <div class="relative w-56">
-        <input type="text" placeholder="Search..." 
-              class="w-full border rounded-lg pl-3 pr-10 py-1.5 text-sm focus:outline-none focus:ring-2
-            focus:ring-blue-500" />
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold mb-4 md:mb-0">Dashboard</h1>
+      <div class="relative w-1/3 md:w-56">
+        <input type="text" placeholder="Search..."
+          class="w-full border rounded-lg pl-3 pr-10 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         <span class="absolute right-3 top-2 text-gray-400 text-sm">🔍</span>
       </div>
     </div>
 
-    <!-- Top Row: This Week Income + Deals Overview + Calendar -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
-      <div class="bg-blue-900 rounded-lg shadow p-4">
-        <h2 class="text-white text-sm">This Week Income</h2>
-        <p class="text-2xl font-bold text-blue-300">$1250</p>
-      </div>
+    <!-- Top Row -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+  <!-- Income Card -->
+  <div class="bg-blue-900 rounded-lg shadow p-4 flex flex-col justify-center">
+    <h2 class="text-white text-sm">This Week Income</h2>
+    <p class="text-2xl font-bold text-blue-300">$1250</p>
+  </div>
 
-      <div class="bg-white rounded-lg shadow p-4 lg:col-span-2">
-        <h2 class="text-lg font-semibold mb-3">Deals Overview</h2>
-        <canvas id="dealsChart" class="w-full h-28"></canvas>
-      </div>
-
-      <div class="bg-white rounded-lg shadow p-4">
-        <h2 class="text-lg font-semibold mb-3">Calendar</h2>
-        <div id="calendar" class="text-center text-gray-500 py-10">📅 Coming soon</div>
-      </div>
+  <!-- Deals Overview Chart -->
+  <div class="bg-white rounded-lg shadow p-4 lg:col-span-2">
+    <h2 class="text-lg font-semibold mb-3">Deals Overview</h2>
+    <div class="h-48"> <!-- Fixed height wrapper -->
+      <canvas id="dealsChart" class="w-full h-full"></canvas>
     </div>
+  </div>
 
-    <!-- Stats Row: Total Deals, Total Contacts, Inbox -->
+  <!-- Calendar -->
+  <div class="bg-white rounded-lg shadow p-4">
+    <h2 class="text-lg font-semibold mb-3">Calendar</h2>
+    <div id="calendar" class="text-center text-gray-500 py-10">📅 Coming soon</div>
+  </div>
+</div>
+
+
+    <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-white rounded-lg shadow p-6 text-center">
         <h2 class="text-gray-600 text-sm mb-2">Total Deals</h2>
         <p class="text-2xl font-bold text-blue-700" id="dealsCount">0</p>
       </div>
-
       <div class="bg-white rounded-lg shadow p-6 text-center">
         <h2 class="text-gray-600 text-sm mb-2">Total Contacts</h2>
         <p class="text-2xl font-bold text-green-600" id="contactsCount">0</p>
       </div>
-
       <div class="bg-white rounded-lg shadow p-6 text-center">
         <h2 class="text-gray-600 text-sm mb-2">Inbox</h2>
         <p class="text-2xl font-bold text-purple-600" id="inboxCount">0</p>
       </div>
     </div>
 
-    <!-- Latest Deals, Contacts, Inbox -->
+    <!-- Latest -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <!-- Latest Deals -->
+      <!-- Deals -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">📌 Recent Deals</h2>
         <table class="w-full text-left text-sm">
@@ -97,14 +104,12 @@
           <tbody id="latestDeals" class="divide-y divide-gray-200"></tbody>
         </table>
       </div>
-
-      <!-- Recent Contacts -->
+      <!-- Contacts -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">👥 Recent Contacts</h2>
         <ul id="latestContacts" class="space-y-2 text-sm"></ul>
       </div>
-
-      <!-- Recent Inbox -->
+      <!-- Inbox -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-semibold mb-3">📩 Recent Inbox</h2>
         <ul id="latestInbox" class="space-y-2 text-sm"></ul>
@@ -118,18 +123,16 @@
 <script>
 const token = localStorage.getItem("access");
 
-// API URLs
+// APIs
 const API_DEALS = "/api/deals/";
 const API_CONTACTS = "/api/contacts/";
 const API_INBOX = "/api/inbox/";
 
-// Fetch deals count + latest
 async function fetchDeals() {
   try {
     const res = await fetch(API_DEALS, { headers: { Authorization: `Bearer ${token}` }});
     if (!res.ok) throw new Error("Failed deals");
     const deals = await res.json();
-
     document.getElementById("dealsCount").innerText = deals.length;
 
     const latest = deals.slice(0, 5);
@@ -150,25 +153,18 @@ async function fetchDeals() {
       type: "bar",
       data: {
         labels: deals.map(d => d.name).slice(0, 5),
-        datasets: [{
-          label: "Amount",
-          data: deals.map(d => d.amount).slice(0, 5),
-          backgroundColor: "rgba(59,130,246,0.6)"
-        }]
-      }
+        datasets: [{ label: "Amount", data: deals.map(d => d.amount).slice(0, 5), backgroundColor: "rgba(59,130,246,0.6)" }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
     });
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err); }
 }
 
-// Fetch contacts count + latest
 async function fetchContacts() {
   try {
     const res = await fetch(API_CONTACTS, { headers: { Authorization: `Bearer ${token}` }});
     if (!res.ok) throw new Error("Failed contacts");
     const contacts = await res.json();
-
     document.getElementById("contactsCount").innerText = contacts.length;
 
     const latest = contacts.slice(0, 5);
@@ -187,18 +183,14 @@ async function fetchContacts() {
         </li>
       `;
     });
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err); }
 }
 
-// Fetch inbox count + latest
 async function fetchInbox() {
   try {
     const res = await fetch(API_INBOX, { headers: { Authorization: `Bearer ${token}` }});
     if (!res.ok) throw new Error("Failed inbox");
     const inbox = await res.json();
-
     document.getElementById("inboxCount").innerText = inbox.length;
 
     const latest = inbox.slice(0, 5);
@@ -212,12 +204,9 @@ async function fetchInbox() {
         </li>
       `;
     });
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err); }
 }
 
-// Initialize all fetches
 fetchDeals();
 fetchContacts();
 fetchInbox();

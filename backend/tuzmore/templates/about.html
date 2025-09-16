@@ -1,3 +1,4 @@
+about.html founder
 {% extends 'base.html' %}
 {% block title %}About Us{% endblock %}
 {% load static %}
@@ -56,79 +57,62 @@
   </div>
 </section>
 
-<!-- Team Section -->
-<section class="py-20 bg-white relative">
-  <div class="max-w-3xl mx-auto px-6 text-center relative">
-    <h2 class="text-3xl font-bold text-gray-800 mb-10">Meet the Team</h2>
+<!-- Founder & Partner Section -->
 
-    <!-- Slides Wrapper -->
-    <div id="team-slides" class="overflow-hidden w-full max-w-md mx-auto relative">
-      
-      <!-- Founder -->
-      <div class="slide active bg-gray-50 rounded-2xl shadow-md p-8 flex flex-col items-center transition">
-        <div class="w-24 h-24 rounded-full overflow-hidden shadow-md border-2 border-gray-200 mb-4">
-          <img src="{% static 'images/founder.jpg' %}" alt="Founder & CEO"
-               class="w-full h-full object-cover">
+<!-- Founder & Partner Section -->
+<section class="py-16 bg-white">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Meet the Team</h2>
+
+    <!-- Team Wrapper (responsive grid) -->
+    <div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2">
+
+      <!-- Founder Card -->
+      <div class="bg-gray-50 rounded-2xl pt-4 pb-6 px-1 sm:px-2 text-center hover:shadow-lg transition">
+        <!-- Image at top of card -->
+        <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-3 flex items-center justify-center">
+          <img src="{% static 'images/founder.jpg' %}" alt="Founder & CEO" class="w-1/2 h-1/2 object-cover rounded-full">
         </div>
-        <h3 class="text-xl font-semibold text-gray-800">Mohamed Hassan</h3>
-        <p class="text-blue-600 text-sm font-medium mb-3">Founder & CEO</p>
-        <p class="text-gray-600 text-sm leading-relaxed">
-          A Software Engineer & Entrepreneur passionate about solving real-world problems. 
-          Mohamed founded Tuzmore to remove the chaos of managing clients, deals, and communication.
+        <!-- Card Content -->
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Hussein</h3>
+        <p class="text-blue-600 text-sm font-medium mb-2">Founder & CEO</p>
+        <p class="text-gray-600 text-sm leading-relaxed mb-2">
+          A Software Engineer driven to solve real-world business challenges. Hussein founded Tuzmore to remove the chaos of managing clients, deals, and communication.
+        </p>
+        <p class="mt-2 text-green-600 text-sm font-semibold">
+          Our mission: Give every business clarity, focus, and growth.
         </p>
       </div>
 
-      <!-- Partner -->
-      <div class="slide hidden bg-gray-50 rounded-2xl shadow-md p-8 flex flex-col items-center transition">
-        <div class="w-24 h-24 rounded-full overflow-hidden shadow-md border-2 border-gray-200 mb-4">
-          <img src="{% static 'images/founder.jpg' %}" alt="Co-Founder & Media Lead"
-               class="w-full h-full object-cover">
+      <!-- Partner Card -->
+      <div class="bg-gray-50 rounded-2xl pt-4 pb-6 px-1 sm:px-2 text-center hover:shadow-lg transition">
+        <!-- Image at top of card -->
+        <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-3 flex items-center justify-center">
+          <img src="{% static 'images/partner.jpg' %}" alt="Head of Media & Communications" class="w-1/2 h-1/2 object-cover rounded-full">
         </div>
-        <h3 class="text-xl font-semibold text-gray-800">[Partner Name]</h3>
-        <p class="text-green-600 text-sm font-medium mb-3">Co-Founder & Media Lead</p>
-        <p class="text-gray-600 text-sm leading-relaxed">
-          Focused on media, communications, and outreach, he ensures Tuzmore connects with businesses 
-          and clients effectively with a professional, client-first approach.
+        <!-- Card Content -->
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Juma</h3>
+        <p class="text-green-600 text-sm font-medium mb-2">Head of Media & Communications</p>
+        <p class="text-gray-600 text-sm leading-relaxed mb-2">
+          He ensures Tuzmore’s voice reaches clients through powerful email marketing, clear communication, and strong media presence.
         </p>
       </div>
+
     </div>
-
-    <!-- Prev Button (outside left edge) -->
-    <button id="prev-btn" 
-      class="absolute top-1/2 -translate-y-1/2 left-0 text-4xl font-bold text-gray-400 hover:text-blue-600 transition">
-      &lt;
-    </button>
-
-    <!-- Next Button (outside right edge) -->
-    <button id="next-btn" 
-      class="absolute top-1/2 -translate-y-1/2 right-0 text-4xl font-bold text-gray-400 hover:text-blue-600 transition">
-      &gt;
-    </button>
   </div>
 </section>
 
-<!-- Carousel Script -->
-<script>
-  const slides = document.querySelectorAll(".slide");
-  let currentIndex = 0;
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("hidden", i !== index);
-    });
-  }
 
-  document.getElementById("next-btn").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  });
 
-  document.getElementById("prev-btn").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
-  });
-</script>
 
+
+
+
+
+
+      
+    
 
 
 

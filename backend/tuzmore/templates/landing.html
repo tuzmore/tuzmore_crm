@@ -1,3 +1,4 @@
+landing.html
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Home{% endblock %}
@@ -63,59 +64,95 @@ gap-10 px-6 md:px-12 pt-32 pb-20 bg-gradient-to-r from-blue-50 via-white to-gray
         </div>
     </div>
 </section>
-
-<!-- Solutions Section -->
 <section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Solutions</h2>
-        <p class="text-gray-600 mb-12 max-w-2xl mx-auto">Some of the tools and apps we've built for clients and businesses.</p>
+  <div class="max-w-6xl mx-auto px-4 text-center">
 
-        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-                <img src="{% static 'images/dashboard.png' %}" alt="CRM dashboard" 
-                     class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Client Portal CRM</h3>
-                <p class="text-gray-600 mt-2">Full-stack CRM app with roles, tasks, messaging, and invoicing built in Django + Tailwind.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-                <img src="{% static 'images/dashboard.png' %}" alt="Freelancer Portfolio" 
-                     class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">Freelancer Portfolio</h3>
-                <p class="text-gray-600 mt-2">Personal portfolio site with services, testimonials, and contact form.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-                <img src="{% static 'images/dashboard.png' %}" alt="API Backend" 
-                     class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">API-Ready Backend</h3>
-                <p class="text-gray-600 mt-2">Scalable REST backend with Django Rest Framework powering real-world applications.</p>
-            </div>
-        </div>
+    <!-- Section Title -->
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+      🚀 The Problems We Solve
+    </h2>
+    <p class="text-gray-600 text-lg mb-12">
+      Businesses lose time and money with scattered tools. Tuzmore solves the biggest challenges 
+      sales teams face every day.
+    </p>
+
+    <!-- Problem/Solution Grid -->
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Problem 1 -->
+      <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="{% static 'images/dashboard.png' %}" alt="Scattered Data" 
+             class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
+        <h3 class="text-xl font-semibold text-gray-800">Scattered Data</h3>
+        <p class="text-gray-600 mt-2 text-sm">
+          Teams waste hours digging through spreadsheets and emails.  
+          <span class="font-semibold text-blue-600">Tuzmore centralizes contacts, deals, tasks, and messages</span> 
+          into one CRM dashboard.
+        </p>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="{% static 'images/dashboard.png' %}" alt="Team Collaboration" 
+             class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
+        <h3 class="text-xl font-semibold text-gray-800">Poor Collaboration</h3>
+        <p class="text-gray-600 mt-2 text-sm">
+          Sales reps, managers, and admins often work in silos.  
+          With Tuzmore, <span class="font-semibold text-blue-600">everyone stays connected with secure role-based permissions</span>.
+        </p>
+      </div>
+
+      <!-- Problem 3 -->
+      <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+        <img src="{% static 'images/dashboard.png' %}" alt="Missed Opportunities" 
+             class="w-full max-w-sm mx-auto rounded-xl shadow mb-4">
+        <h3 class="text-xl font-semibold text-gray-800">Missed Opportunities</h3>
+        <p class="text-gray-600 mt-2 text-sm">
+          Without reminders, follow-ups are forgotten and leads go cold.  
+          Tuzmore <span class="font-semibold text-blue-600">automates tasks, tracks pipelines, and boosts conversions</span>.
+        </p>
+      </div>
+
     </div>
+  </div>
 </section>
 
 <!-- Testimonials -->
 <section class="py-20 bg-gray-100">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">What People Say</h2>
-        <p class="text-gray-600 mb-12 text-lg max-w-2xl mx-auto">
-            Placeholder testimonials showing professionalism and trustworthiness.
-        </p>
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">What Our Clients Say</h2>
+    <p class="text-gray-600 mb-12 text-lg max-w-2xl mx-auto">
+      Trusted by business owners, freelancers, and startups who use Tuzmore to streamline their growth.
+    </p>
 
-        <div class="grid gap-8 md:grid-cols-3">
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <p class="text-gray-700 mb-4">“This CRM simplified our workflow and saved us hours every week.”</p>
-                <div class="text-sm font-semibold text-gray-800">— Moham M., Business Owner</div>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <p class="text-gray-700 mb-4">“Clean design, reliable, and fast. Impressive work!”</p>
-                <div class="text-sm font-semibold text-gray-800">— Alex B., Freelancer</div>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <p class="text-gray-700 mb-4">“Task tracking and messaging made collaboration seamless.”</p>
-                <div class="text-sm font-semibold text-gray-800">— Majid Y., Startup Founder</div>
-            </div>
-        </div>
+    <div class="grid gap-8 md:grid-cols-3">
+      
+      <!-- Testimonial 1 -->
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <p class="text-gray-700 italic mb-4">
+          “Tuzmore completely changed how we manage clients. Everything is in one place, and we save nearly <span class="font-semibold">10+ hours a week</span>.”
+        </p>
+        <div class="text-sm font-semibold text-gray-900">— Sarah K., Marketing Agency Owner</div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <p class="text-gray-700 italic mb-4">
+          “The dashboard is simple yet powerful. As a freelancer, I finally feel organized — no more spreadsheets or lost emails.”
+        </p>
+        <div class="text-sm font-semibold text-gray-900">— Daniel R., Freelance Designer</div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+        <p class="text-gray-700 italic mb-4">
+          “Collaboration became seamless. Our sales team tracks deals, tasks, and messages all in one place — productivity skyrocketed.”
+        </p>
+        <div class="text-sm font-semibold text-gray-900">— Aisha M., Startup Founder</div>
+      </div>
+
     </div>
+  </div>
 </section>
 
 <!-- CTA Section -->
