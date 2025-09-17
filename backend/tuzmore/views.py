@@ -58,6 +58,9 @@ def contact_us_view(request):
 def landing_view(request):
     return render(request, "landing.html")
 
+def blog_view(request):
+    return render(request, 'blog.html')
+
 @login_required
 def inbox_view(request):
     return render(request, "inbox.html")  # create inbox.html template

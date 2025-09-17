@@ -54,7 +54,8 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('solutions/', views.solutions_view, name='solutions'),
     path('contact/', views.contact_us_view, name='contact'),
-    path('inbox/', views.inbox_view, name='inbox')
+    path('inbox/', views.inbox_view, name='inbox'),
+    path('blog/', views.blog_view, name='blog' ),
 
 
 
