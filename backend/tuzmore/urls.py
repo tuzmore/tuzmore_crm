@@ -50,7 +50,6 @@ urlpatterns = [
     path('deals/', lambda request: render(request, 'deals.html'), name='deals'),
     path('contacts/', lambda request: render(request, 'contacts.html'), name='contacts'),
     path('tasks/', lambda request: render(request, 'tasks.html'), name='tasks'),
-    path('api/', include('users.urls', namespace='users')),
     path('about/', views.about_view, name='about'),
     path('solutions/', views.solutions_view, name='solutions'),
     path('contact/', views.contact_us_view, name='contact'),

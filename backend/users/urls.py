@@ -17,7 +17,6 @@ from .views import (
 router = DefaultRouter()
 router.register(r'admin/users', AdminUserViewSet, basename='admin-users')
 
-app_name = "users" 
 
 urlpatterns = [
     # Auth endpoints

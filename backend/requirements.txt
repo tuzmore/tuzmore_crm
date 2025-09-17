@@ -29,3 +29,6 @@ stripe==8.4.0
 
 # Statics
 whitenoise==6.7.0
+
+# Database
+dj-database-url==2.2.0
