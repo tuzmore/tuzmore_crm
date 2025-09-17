@@ -90,21 +90,9 @@ WSGI_APPLICATION = 'tuzmore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if config('DATABASE_URL', default=None):
-    DATABASES = {
-        'default':
-        dj_database_url.parse(config('DATABASE_URL'))
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB', default='tuzmore_db'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST'),
-        'PORT': config('POSTGRES_PORT', default=5432, cast=int),
-    }
+DATABASES = {
+    'default':
+dj_database_url.parse(config('DATABSE_URL'))
 }
 
 
