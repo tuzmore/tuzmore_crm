@@ -1,7 +1,7 @@
 # Tuzmore CRM 
 **Moden, dockerized SaaS platform with JWT authentication, user roles
 admin, manager and sales. API intergartions, Swagger API docs and redoc.
-<img src="backend/static/images/dashboard.png" alt="Dasboard Screenshot width="600" height="350"/>
+<img src="backend/static/images/dashboard.png" alt="Dasboard Screenshot width="500"/>
 
 ## ⭐ Features
 - Responsive dashboard with analytics  and charts
