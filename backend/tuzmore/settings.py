@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'tuzmore.wsgi.application'
 
 DATABASES = {
     'default':
-dj_database_url.parse(config('DATABSE_URL'))
+dj_database_url.parse(config('DATABASE_URL'))
 }
 
 
