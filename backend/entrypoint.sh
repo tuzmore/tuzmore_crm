@@ -1,23 +1,36 @@
 #!/bin/sh
 set -e
 
-DB_HOST="${POSTGRES_HOST:-db}"
-DB_PORT="${POSTGRES_PORT:-5432}"
+echo "=========================================="
+echo "🚀 Starting Tuzmore Django Application"
+echo "=========================================="
 
-echo "Waiting for Postgres at $DB_HOST:$DB_PORT..."
-until nc -z "$DB_HOST" "$DB_PORT"; do
-    echo "Postgres not ready yet..."
-    sleep 1
+# Ensure DATABASE_URL is set
+if [ -z "$DATABASE_URL" ]; then
+    echo "❌ ERROR: DATABASE_URL environment variable not set!"
+    exit 1
+fi
+
+# Optional: wait for PostgreSQL to be ready
+echo "Checking database connection..."
+until python manage.py check --database default; do
+    echo "⏳ Database not ready yet, waiting..."
+    sleep 3
 done
 
-echo "Running Django setup..."
+echo "✅ Database is ready!"
+
+# Run migrations
+echo "Applying database migrations..."
 python manage.py migrate --noinput
 
+# Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --clear
 
-echo "Starting Gunicorn..."
+# Start Gunicorn
+echo "Starting Gunicorn server..."
 exec gunicorn tuzmore.wsgi:application \
-    --bind 0.0.0.0:8000 \ 
-    --workers=4 \
-    --timeout=120
+    --bind 0.0.0.0:8000 \
+    --workers 4 \
+    --timeout 120
