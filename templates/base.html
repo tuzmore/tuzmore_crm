@@ -7,20 +7,26 @@
     <title>Tuzmore CRM</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-<body>
+<body class="bg-gray-100">
     {% if user.is_authenticated %}
-    <div class="flex justify-end p-4">
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="bg-red-500 text-white
-            px-4 py-2 rounded hover:bg-red-600">
-                Logou
-            </button>
 
-        </form>
+    {% include "partials/sidebar.html" %}
+    <div class="ml-64 min-h-screen">
+        {% include "partials/navbar.html" %}
+
+        <main class="p-8">
+            {% block content %}
+            {% endblock %}
+        </main>
+        {% include "partials/footer.html" %}
+
     </div>
+
+    {% else %}
+        {% block auth_content %}
+        {% endblock %}
     {% endif %}
-    {% block content %}
-    {% endblock %}
+
+
 </body>
 </html>

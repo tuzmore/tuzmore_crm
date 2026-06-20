@@ -16,14 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render
 
-from django.http import HttpResponse
+def dashboard(request):
+    return render(
+        request, "dashboard/dashboard.html"
+    )
 
-def home(request):
-    return HttpResponse("Tuzmore CRM")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("apps.accounts.urls")),
-    path("", home),
+    path("", dashboard, name="dashboard"),
 ]

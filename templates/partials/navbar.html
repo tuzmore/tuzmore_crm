@@ -1,0 +1,21 @@
+<div class="h-16 bg-white shadow flex
+justify-between items-center px-8">
+
+    <h2 class="font-semibold text-xl">
+        Dashboard
+    </h2>
+
+    <div class="flex items-center gap-4">
+        <span>
+            {{ request.user.username }}
+        </span>
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button class="bg-red-500 text-white px-4 py-2 rounded">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
