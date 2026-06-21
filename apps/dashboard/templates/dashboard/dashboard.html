@@ -1,8 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="text-3xl font-bold">
-    Welcome to Tuzmore CRM
+<h1 class="text-2xl font-bold mb-6">
+    Dashboard1
 </h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2
+    lg:grid-cols-4 gap-4">
+    
+    <div class="bg-white p-4 rounded shadow">
+        Contacts
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+        Companies
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+        Deals
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+        Tasks
+    </div>
+
+</div>
 
 {% endblock %}
