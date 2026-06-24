@@ -16,18 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import render
 
-def dashboard(request):
-    return render(
-        request, "dashboard/dashboard.html"
-    )
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("apps.accounts.urls")),
-    path("", dashboard, name="dashboard"),
-    path("contacts/", include("apps.contacts.urls")),
+    path("dashboard/", include("apps.dashboard.urls")),
+    path("companies/", include("apps.companies.urls")),
 ]

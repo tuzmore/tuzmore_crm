@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.accounts',
     'apps.dashboard',
-    'apps.contacts',
+    'apps.companies',
+    'rest_framework',
 
     
 ]
@@ -134,8 +135,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/dashboard/"
 LOGOUT_REDIRECT_URL  = "/accounts/login/"
+LOGIN_URL = "/accounts/login/"
 
 AUTH_USER_MODEL = 'accounts.User'
 
