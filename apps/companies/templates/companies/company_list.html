@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="flex justify-between mb-6">
+    <h1 class="text-3xl font-bold">
+        Companies
+    </h1>
+
+    <a href="{% url 'company_create' %}"
+    class="bg-blue-600 text-white px-4 py-2 rounded">
+        Add Company
+    </a>
+
+</div>
+
+<form class="mb-6">
+    <input type="text"
+    name="search"
+    value="{{ search }}"
+    placeholder="Search company"
+    class="border rounded px-4 py-2"
+    >
+
+    <button class="bg-blue-600 text-white px-4, py-2 rounded">
+        Search
+
+    </button>
+</form>
+
+{% for company in companies %}
+<div class="bg-white p-4 rounded shadow mb-4">
+    <h2 class="font-bold">
+        {{ company.name }}
+    </h2>
+
+    <p>{{ company.industry }}</p>
+    <a href="{% url 'company_detail' company.pk %}">
+        View
+    </a>
+
+</div>
+{% empty %}
+<p>No companies yet.</p>
+{% endfor %}
+{% endblock %}
