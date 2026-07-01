@@ -11,8 +11,15 @@
 <p>{{ company.industry }}</p>
 <p>{{ company.address }}</p>
 
-<a href="{% url 'company_update' company.pk %}">
+<a href="{% url 'company_update' company.pk %}"
+    class="bg-blue-600 text-white px-4 py-2  rounded">
     Edit
 </a>
+
+<a href="{% url 'company_delete' company.pk %}"
+    class="bg-red-500 text-white px-4 py-2 rounded">
+    Delete
+</a>
+
 
 {% endblock %}

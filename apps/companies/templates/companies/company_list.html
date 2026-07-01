@@ -27,14 +27,15 @@
     </button>
 </form>
 
-{% for company in companies %}
+{% for company in page_obj %}
 <div class="bg-white p-4 rounded shadow mb-4">
     <h2 class="font-bold">
         {{ company.name }}
     </h2>
 
     <p>{{ company.industry }}</p>
-    <a href="{% url 'company_detail' company.pk %}">
+    <a href="{% url 'company_detail' company.pk %}"
+    class="text-blue-600 font-bold mt-5">
         View
     </a>
 

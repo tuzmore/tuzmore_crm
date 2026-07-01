@@ -14,37 +14,51 @@ from django.http import HttpResponse
 
 @login_required
 def company_list(request):
+
+    search = request.GET.get("search", "")
     companies = Company.objects.filter(
         owner=request.user
     )
+
+    if search:
+        companies = companies.filter(
+            Q(name__icontains=search)|
+            Q(email__icontains=search)|
+            Q(industry__icontains=search)
+        )
+
+    paginator = Paginator(
+            companies,
+            10
+        )
+
+    page_number = request.GET.get(
+            "page"
+        )
+
+    page_obj = paginator.get_page(
+            page_number
+        )
 
     return render(
         request,
         "companies/company_list.html",
         {
-            "companies": companies,
+            "page_obj": page_obj,
+            "search": search,
         }
     )
 
 
 
-    
-        
-        
-    
-
 @login_required
 def company_create(request):
-    print("VIEW HIT")
 
     if request.method == "POST":
         form = CompanyForm(request.POST)
-        print("METHOD:", request.method)
-        print("FORM:", form)
         
 
         if form.is_valid():
-            print("VALID FORM")
             company = form.save(
                 commit=False
             )
@@ -55,7 +69,7 @@ def company_create(request):
                 "company_list"
             )
     else:
-            print("ERROS FORMS")
+            
             form = CompanyForm()
     return render(
                 request,
@@ -79,12 +93,14 @@ def company_detail(request, pk):
 
 @login_required
 def company_update(request, pk):
+
     company = get_object_or_404(
         Company, pk=pk,
         owner=request.user
     )
 
     if request.method == "POST":
+
         form = CompanyForm(
             request.POST,
             instance=company
@@ -95,11 +111,11 @@ def company_update(request, pk):
             return redirect(
                 "company_list"
             )
-        else:
+    else:
             form = CompanyForm(
                 instance=company
             )
-            return render(
+    return render(
                 request,
                 "companies/company_form.html",
                 {"form": form}
@@ -108,6 +124,7 @@ def company_update(request, pk):
 
 @login_required
 def company_delete(request, pk):
+    
     company = get_object_or_404(
         Company, pk=pk,
         owner=request.user
