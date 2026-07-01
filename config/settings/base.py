@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.companies',
     'rest_framework',
+    'apps.contacts',
 
     
 ]
