@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.companies',
     'rest_framework',
     'apps.contacts',
+    'apps.deals',
 
     
 ]
