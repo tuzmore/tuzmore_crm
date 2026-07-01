@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-3xl font-bold">
+    {{ contact.first_name }}
+    {{contact.last_name }}
+</h1>
+
+<p>{{ contact.email }}</p>
+<p>{{ contact.phone }}</p>
+<p>{{ contact.company }}</p>
+<p>{{ contact.position }}</p>
+
+<a href="{% url 'contact_update' contact.pk %}"
+class="bg-blue-600 text-white px-4 py-2  rounded">
+    Edit
+</a>
+
+<a href="{% url 'contact_delete' contact.pk %}"
+    class="bg-red-500 text-white px-4 py-2 rounded">
+    Delete
+</a>
+
+{% endblock %}
