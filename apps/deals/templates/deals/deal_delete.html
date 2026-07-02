@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-2xl font-bold">
+    Delete Deal
+</h1>
+<p class="mb-6">
+    Are you sure you want to delete
+    <strong>{{ deal.name }}</strong>
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+<button type="submit" 
+class="bg-red-500 text-white px-4 py-2 rounded">
+    Delete Deal
+</button>
+
+<a href="{% url 'deal_detail' deal.pk %}"
+    class="bg-gray-500 text-white px-4 py-2 rounded">
+        Cancel
+</a>
+</form>
+
+{% endblock %}

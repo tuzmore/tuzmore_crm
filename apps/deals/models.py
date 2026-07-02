@@ -49,7 +49,7 @@ class Deal(models.Model):
 
     expected_close_date = models.DateField()
 
-    note = models.TextField(
+    notes = models.TextField(
         blank=True
     )
 

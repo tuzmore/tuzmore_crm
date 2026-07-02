@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-6">
+    Deals
+</h1>
+<a href="{% url 'deal_create' %}"
+class="bg-blue-600 text-white px-4 py-2 rounded">
+    Add Deal
+</a>
+
+<form class="my-6">
+    <input 
+    type="text"
+    name="search"
+    value="{{ search }}"
+    placeholder="search deals"
+    class="border rounded px-4 py-2"
+    >
+
+    <button class="bg-blue-600 text-white px-4 py-2 rounded">
+        Search
+
+    </button>
+</form>
+
+{% for deal in page_obj %}
+<div class="bg-white p-4 rounded shadow mb-4">
+    <h2>{{ deal.title }}</h2>
+    <p>{{ deal.stage }}</p>
+    <p>{{deal.value }}</p>
+    <a href="{% url 'deal_detail' deal.pk %}"
+    class="text-blue-600 font-bold mt-5">
+        View
+    </a>
+</div>
+{% empty %}
+<p>No deals found.</p>
+{% endfor %}
+{% endblock %}
